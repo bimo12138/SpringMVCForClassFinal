@@ -44,7 +44,7 @@
         <input type="password" id="password" name="password" class="form-control">
         <div class="checkbox">
             <label>
-                <input type="checkbox"  id="remember"> 记住我
+                <input type="checkbox" id="remember"> 记住我
             </label>
         </div>
         <div class="alert alert-warning" role="alert" id="error">
@@ -59,6 +59,15 @@
 <script>
     (function () {
         // 默认错误提示框为隐藏
+        let username = localStorage.getItem("username");
+        let password, remember;
+        if (username) {
+            password = localStorage.getItem("password");
+            remember = localStorage.getItem("remember");
+            $("#username").val(username);
+            $("#password").val(password);
+            $("#remember")[0].checked = remember;
+        }
 
     })();
 
@@ -69,8 +78,15 @@
         error.text(message);
     }
     function login(e) {
+        let error = $("#error");
+        error.css("display", "none");
+        let btn = $(".btn");
+        btn.attr("disabled", true);
+
         let username = $("#username").val();
         let password = $("#password").val();
+        let remember = $("#remember")[0].checked;
+
         if (username === "" || password === "") {
             found_error("用户名和密码不能为空！");
             return ;
@@ -88,8 +104,29 @@
                     return ;
                 } else {
                     // LOGIN SUCCESS
-                    window.location.href = "${pageContext.request.contextPath}/admin?username=bimo";
+                    if (remember) {
+                        localStorage.setItem("username", username);
+                        localStorage.setItem("password", password);
+                        localStorage.setItem("remember", true.toString());
+                    } else {
+                        localStorage.setItem("username", username);
+                        localStorage.setItem("remember", false.toString());
+                    }
+                    window.location.href = "${pageContext.request.contextPath}/admin";
                 }
+            },
+            fail: (res) => {
+                found_error(res);
+            },
+            error: (err) => {
+                if (err.status === 500) {
+                    found_error("服务器出现问题，请联系管理员处理！");
+                } else {
+                    found_error("未知错误！");
+                }
+            },
+            complete: () => {
+                btn.attr("disabled", false);
             }
         })
 

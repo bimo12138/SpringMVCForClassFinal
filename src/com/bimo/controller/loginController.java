@@ -27,7 +27,6 @@ public class loginController {
     @PostMapping
     @ResponseBody
     public String login(User user) {
-        System.out.println(user);
         User result = userService.findUserByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (result == null) {
             return "当前用户不存在";
