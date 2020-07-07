@@ -13,7 +13,7 @@ public class Movie {
     private String logoPath;
     private Date upload_time;
     private Date deploy_time;
-    private List<String> rooms;
+    private String rooms;
     private Double price;
 
     public Movie() {
@@ -25,7 +25,8 @@ public class Movie {
         this.type = type;
         this.score = score;
         this.deploy_time = deploy_time;
-        this.rooms = rooms;
+        this.upload_time = new Date();
+        this.rooms = rooms.toString();
         this.price = price;
     }
 
@@ -93,11 +94,11 @@ public class Movie {
         this.deploy_time = deploy_time;
     }
 
-    public List<String> getRooms() {
+    public String getRooms() {
         return rooms;
     }
 
     public void setRooms(List<String> rooms) {
-        this.rooms = rooms;
+        this.rooms = rooms.toString();
     }
 }

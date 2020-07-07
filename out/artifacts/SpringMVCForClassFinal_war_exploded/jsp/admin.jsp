@@ -78,6 +78,8 @@
         <aside class="col-lg-3">
             <div class="list-group">
                 <a class="list-group-item" onclick="userManager()">用户管理</a>
+                <a class="list-group-item" onclick="movieManager()">影片管理</a>
+                <a class="list-group-item" onclick="roomManager()">影院管理</a>
             </div>
         </aside>
         <main class="col-lg-8" id="main-container">
@@ -142,6 +144,24 @@
         }
         function confirmLogout() {
             $("#action").html("退出");
+        }
+        function movieManager() {
+            $.ajax({
+                type: "GET",
+                url: "${pageContext.request.contextPath}/movieManager",
+                success: (res) => {
+                    $("#main-container").html(res);
+                }
+            })
+        }
+        function roomManager() {
+            $.ajax({
+                type: "GET",
+                url: "${pageContext.request.contextPath}/rooms",
+                success: (res) => {
+                    $("#main-container").html(res);
+                }
+            })
         }
     </script>
 </body>

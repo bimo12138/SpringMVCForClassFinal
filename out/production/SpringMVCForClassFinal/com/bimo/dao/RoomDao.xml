@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bimo.dao.RoomDao">
+    <select id="getAllRooms" resultType="Room">
+        SELECT * FROM room
+    </select>
+    <insert id="saveRoom" parameterType="Room">
+        INSERT INTO room VALUES (#{id}, #{roomName}, #{status}, #{charts})
+    </insert>
+    <delete id="deleteRoomById" parameterType="String">
+        DELETE FROM room WHERE id = #{id}
+    </delete>
+</mapper>

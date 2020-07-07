@@ -29,6 +29,9 @@
             <div class="col-lg-1 col-lg-offset-1">
                 <a href="#">联系我们</a>
             </div>
+            <div class="col-lg-4">
+                <a href="#">管理端登陆</a>
+            </div>
         </div>
         <div class="row">
             <h2>&copy; 版权所有, mo!</h2>
