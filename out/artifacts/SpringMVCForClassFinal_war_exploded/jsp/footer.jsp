@@ -27,10 +27,10 @@
     <footer class="container-fluid">
         <div class="row">
             <div class="col-lg-1 col-lg-offset-1">
-                <a href="#">联系我们</a>
+                <a href="mailto:1371639183@qq.com">联系我们</a>
             </div>
             <div class="col-lg-4">
-                <a href="#">管理端登陆</a>
+                <a href="${pageContext.request.contextPath}/admin">管理端登陆</a>
             </div>
         </div>
         <div class="row">

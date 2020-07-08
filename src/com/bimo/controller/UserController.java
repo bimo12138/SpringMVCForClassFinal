@@ -44,6 +44,7 @@ public class UserController {
     public String saveUser(User user) {
         user.setId(UUID.randomUUID().toString());
         user.setSex(0);
+        user.setSuperuser(false);
         Integer num = userService.saveUserByUser(user);
         if (num > 0) {
             return user.getUsername() + "添加成功！";

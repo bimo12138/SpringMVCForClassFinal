@@ -48,6 +48,8 @@
                     <input type="password" class="form-control" id="edit_password">
                     <label for="edit_sex">性别</label>
                     <input type="text" class="form-control" id="edit_sex">
+                    <label for="superuser">管理员</label>
+                    <input type="checkbox" id="superuser">
                 </form>
                 <div class="alert alert-warning" role="alert" id="edit_error">
 
@@ -68,6 +70,7 @@
             <td>用户名</td>
             <td>密码</td>
             <td>性别</td>
+            <td>管理员</td>
             <td>操作</td>
         </tr>
         </thead>
@@ -80,6 +83,7 @@
                     <td>${user.username}</td>
                     <td>${user.password}</td>
                     <td>${user.sex}</td>
+                    <td>${user.superuser}</td>
                     <td>
                         <button class="btn btn-primary" onclick="editButton(${userStatus.index})">修改</button>
                         <button class="btn btn-warning" onclick="deleteButton(${userStatus.index})">删除</button>
@@ -110,6 +114,7 @@
         let username = tr[1].innerText;
         let password = tr[2].innerText;
         let sex = tr[3].innerText;
+        let superuser = tr[4].innerText;
         $("#edit_id").val(id);
         $("#edit_username").val(username);
         $("#edit_password").val(password);
@@ -121,6 +126,7 @@
         let username = $("#edit_username").val();
         let password = $("#edit_password").val();
         let sex = $("#edit_sex").val();
+        let superuser = $("#superuser").checked;
         if (username === "" || password === "" || sex === "") {
             found_edit_error("信息不能为空！");
         }
@@ -131,7 +137,8 @@
                 id: id,
                 username: username,
                 password: password,
-                sex: sex
+                sex: sex,
+                superuser: superuser
             },
             success: (res) => {
                 found_edit_error(res);

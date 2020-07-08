@@ -68,15 +68,6 @@
 
 </div>
 <script>
-    (function () {
-        $.ajax({
-            method: "GET",
-            url: "${pageContext.request.contextPath}/rooms",
-            success: (res) => {
-                console.log(res);
-            }
-        });
-    })();
     function saveRoom() {
         let roomName = $("#roomName").val();
         let charts = $("#charts").val();
@@ -91,7 +82,7 @@
                 charts: charts
             },
             success: (res) => {
-                console.log(res);
+                window.location.reload();
             }
         })
     }
@@ -100,6 +91,7 @@
         $.ajax({
             type: "POST",
             url: "${pageContext.request.contextPath}/rooms/delete",
+
             data: {
                 id: id
             },

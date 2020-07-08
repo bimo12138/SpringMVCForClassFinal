@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label for="logoPath">宣传海报</label>
-                        <input type="file" id="logoPath" class="form-control">
+                        <input type="file" id="logoPath" class="form-control" name="logoPath">
                     </div>
                     <div class="form-group">
                         <label for="deploy_time">上映时间</label>
@@ -43,10 +43,44 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-primary" onclick="saveMovie()">保存</button>
             </div>
         </div>
     </div>
+</div>
+
+<div class="container-fluid">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>影片名</td>
+            <td>影片类型</td>
+            <td>LOGO</td>
+            <td>上传时间</td>
+            <td>价格</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <jsp:useBean id="movies" scope="request" type="java.util.List"/>
+        <c:forEach items="${movies}" var="movie" varStatus="movieStatus">
+            <tr id="${movieStatus.index}">
+                <th>${movie.id}</th>
+                <td>${movie.name}</td>
+                <td>${movie.type}</td>
+                <td>${movie.logoPath}</td>
+                <td>${movie.upload_time}</td>
+                <td>${movie.price}</td>
+                <td>
+                    <button class="btn btn-warning" onclick="deleteButton(${movieStatus.index})">删除</button>
+                </td>
+            </tr>
+        </c:forEach>
+
+        </tbody>
+    </table>
+
 </div>
 
 <script>
@@ -75,24 +109,49 @@
     function saveMovie() {
         let movieName = $("#movieName").val();
         let movieType = $("#movieType").val();
-        let movieLogo = $("#logoPath").val();
+        let movieLogo = document.getElementById("logoPath").files[0];
         let deploy_time = $("#deploy_time").val();
         let price = $("#price").val();
-        let rooms = $("#rooms").val();
+        let rooms;
+        document.getElementsByName("rooms").forEach(element => {
+            if (element.checked) {
+                rooms += element.value + "|";
+            }
+        });
+
+        let formData = new FormData();
+
+        formData.append("movieName", movieName);
+        formData.append("movieType", movieType);
+        formData.append("movieLogo", movieLogo);
+        formData.append("deployTime", deploy_time);
+        formData.append("price", price);
+        formData.append("rooms", rooms);
 
         $.ajax({
             method: "POST",
-            url: "${pageContext.request.contextPath}/movie",
+            url: "${pageContext.request.contextPath}/movieManager",
+            data: formData,
+            processData : false,
+            contentType : false,
+            success: (res) => {
+                alert(res);
+                window.location.reload();
+            }
+        })
+    }
+
+    function deleteButton(index) {
+        let id = $("#" + index).children()[0].innerText;
+        $.ajax({
+            type: "POST",
+            url: "${pageContext.request.contextPath}/movieManager/delete",
             data: {
-                movieName: movieName,
-                movieType: movieType,
-                movieLogo: movieLogo,
-                deployTime: deploy_time,
-                price: price,
-                rooms: rooms
+                id: id
             },
             success: (res) => {
-                console.log(res);
+                alert("删除成功！");
+                window.location.reload();
             }
         })
     }

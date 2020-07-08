@@ -1,5 +1,7 @@
 package com.bimo.pojo;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.UUID;
 
 public class User {
@@ -7,12 +9,22 @@ public class User {
     private String username;
     private String password;
     private Integer sex;
+    private Boolean superuser;
 
-    public User(String  id, String username, String password, Integer sex) {
+    public User(String  id, String username, String password, Integer sex, Boolean superuser) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.sex = sex;
+        this.superuser = superuser;
+    }
+
+    public Boolean getSuperuser() {
+        return superuser;
+    }
+
+    public void setSuperuser(Boolean superuser) {
+        this.superuser = superuser;
     }
 
     public User(String username, String password) {
@@ -20,6 +32,7 @@ public class User {
         this.password = password;
         this.sex = 0;
         this.id = UUID.randomUUID().toString();
+        this.superuser = false;
     }
 
     public User() {

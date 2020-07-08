@@ -1,5 +1,7 @@
 package com.bimo.controller;
 
+import com.bimo.annotation.RequireAdmin;
+import com.bimo.annotation.RequireLogin;
 import com.bimo.pojo.User;
 import com.bimo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class adminController {
     }
 
     @GetMapping
+    @RequireLogin
+    @RequireAdmin
     public ModelAndView adminPage(String username) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");

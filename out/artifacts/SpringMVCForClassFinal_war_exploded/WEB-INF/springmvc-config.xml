@@ -20,9 +20,17 @@
     <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/media/**" location="/media/" />
 
+    <mvc:interceptors>
+        <bean class="com.bimo.interceptor.LoginInterceptor" />
+    </mvc:interceptors>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="17367648787" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
 </beans>

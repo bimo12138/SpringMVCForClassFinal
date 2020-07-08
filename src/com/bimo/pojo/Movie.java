@@ -30,6 +30,16 @@ public class Movie {
         this.price = price;
     }
 
+    public Movie(String name, String type, Date deploy_time, String rooms, Double price) {
+        this.id = GetUUID.getUUID();
+        this.name = name;
+        this.type = type;
+        this.upload_time = new Date();
+        this.deploy_time = deploy_time;
+        this.rooms = rooms;
+        this.price = price;
+    }
+
     public String getLogoPath() {
         return logoPath;
     }

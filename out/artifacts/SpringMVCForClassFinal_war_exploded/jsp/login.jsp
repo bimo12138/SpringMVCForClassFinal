@@ -59,16 +59,6 @@
 <script>
     (function () {
         // 默认错误提示框为隐藏
-        let username = localStorage.getItem("username");
-        let password, remember;
-        if (username) {
-            password = localStorage.getItem("password");
-            remember = localStorage.getItem("remember");
-            $("#username").val(username);
-            $("#password").val(password);
-            $("#remember")[0].checked = remember;
-        }
-
     })();
 
     function found_error(message) {
@@ -103,16 +93,7 @@
                     found_error(res);
                     return ;
                 } else {
-                    // LOGIN SUCCESS
-                    if (remember) {
-                        localStorage.setItem("username", username);
-                        localStorage.setItem("password", password);
-                        localStorage.setItem("remember", true.toString());
-                    } else {
-                        localStorage.setItem("username", username);
-                        localStorage.setItem("remember", false.toString());
-                    }
-                    window.location.href = "${pageContext.request.contextPath}/admin";
+                    window.location.href = "${pageContext.request.contextPath}/";
                 }
             },
             fail: (res) => {

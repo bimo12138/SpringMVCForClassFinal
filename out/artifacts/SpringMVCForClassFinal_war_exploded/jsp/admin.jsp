@@ -140,7 +140,14 @@
             getUsers(0, 20);
         }
         function logout() {
-            window.location.href = "${pageContext.request.contextPath}/login";
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/logout",
+                success: (res) => {
+                    alert(res);
+                    window.location.href = "${pageContext.request.contextPath}/";
+                }
+            })
         }
         function confirmLogout() {
             $("#action").html("退出");

@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/login")
 public class loginController {
@@ -26,11 +28,12 @@ public class loginController {
 
     @PostMapping
     @ResponseBody
-    public String login(User user) {
+    public String login(User user, HttpSession httpSession) {
         User result = userService.findUserByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (result == null) {
             return "当前用户不存在";
         }
+        httpSession.setAttribute("user", result);
         return user.getUsername();
     }
 }
