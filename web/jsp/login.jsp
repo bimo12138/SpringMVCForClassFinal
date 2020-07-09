@@ -89,10 +89,12 @@
                 password: password
             },
             success: (res) => {
-                if (res === "当前用户不存在") {
+                if (res === "") {
                     found_error(res);
                     return ;
                 } else {
+                    localStorage.setItem("username", res["username"]);
+                    localStorage.setItem("userId", res["id"]);
                     window.location.href = "${pageContext.request.contextPath}/";
                 }
             },

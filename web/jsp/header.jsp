@@ -42,8 +42,10 @@
         (function () {
             let container = $("#userContainer");
             let username = localStorage.getItem("username");
+            let userId = localStorage.getItem("userId");
             if (username !== "") {
-                container.append("<li><a href='#'>" + username + "</a></li>");
+                container.append("<li><a href='${pageContext.request.contextPath}/order?userId=" + userId + "'>我的订单</a></li>" +
+                    "<li><a href='#'>" + username + "</a></li>");
             } else {
                 container.append("<li><a href='login' id='login_container'>登陆</a></li>");
             }

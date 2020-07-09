@@ -28,12 +28,12 @@ public class loginController {
 
     @PostMapping
     @ResponseBody
-    public String login(User user, HttpSession httpSession) {
+    public User login(User user, HttpSession httpSession) {
         User result = userService.findUserByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (result == null) {
-            return "当前用户不存在";
+            return null;
         }
         httpSession.setAttribute("user", result);
-        return user.getUsername();
+        return result;
     }
 }

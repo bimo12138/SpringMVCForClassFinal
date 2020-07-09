@@ -19,7 +19,6 @@
             position: fixed;
             bottom: 0;
             background: #5e5e5e;
-            color: white;
             height: 100px;
         }
         .buy {
@@ -27,15 +26,33 @@
             right: 3rem;
             top: 50%;
             transform: translateY(-50%);
-            background: #2e6da4;
-            color: red;
             padding: 1rem;
             font-size: 5rem;
         }
     </style>
 </head>
 <body>
-    <%@ include file="header.jsp" %>
+
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myLabel">确认订单</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="${pageContext.request.contextPath}/order" method="POST">
+                        <h4>用户ID: <strong id="userName"></strong></h4>
+                        <h4>电影ID: <strong id="movieName"></strong></h4>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="buy('${movie.id}')">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <ol class="breadcrumb">
         <li><a href="${pageContext.request.contextPath}/">首页</a></li>
         <li class="active" id="currentMovie">${movie.name}</li>
@@ -60,10 +77,15 @@
 
     </div>
     <div class="fixed-bottom">
-        <div class="buy">购票</div>
+        <div class="buy">
+            <button class="btn btn-warning" data-toggle="modal" data-target="#add">购买</button>
+        </div>
     </div>
     <script>
         (function () {
+            let userName = localStorage.getItem("username");
+            $("#userName").html(userName);
+            $("#movieName").html("${movie.name}");
             let path = window.location.search.substr(1);
             let all_path = path.split("&");
             let movieId;
@@ -75,8 +97,34 @@
             });
             $(document).attr("title", movieId + "电影详情");
         })();
+        function buy(movieId) {
 
-
+            let userId = localStorage.getItem("userId");
+            if (userId === null) {
+                window.location.href = "${pageContext.request.contextPath}/login";
+                return ;
+            }
+            if (movieId === "") {
+                alert("出现位置错误，请重试！");
+                return ;
+            }
+            $.ajax({
+                method: "POST",
+                url: "${pageContext.request.contextPath}/order",
+                data: {
+                    movieId: movieId,
+                    userId: userId
+                },
+                success: (res) => {
+                    alert(res);
+                    window.location.reload();
+                },
+                fail: (res) => {
+                    alert("请先登录！");
+                    window.location.href = "${pageContext.request.contextPath}/login";
+                }
+            })
+        }
     </script>
     <%@ include file="footer.jsp" %>
 </body>

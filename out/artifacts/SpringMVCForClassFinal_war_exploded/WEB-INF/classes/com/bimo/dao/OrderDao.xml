@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bimo.dao.OrderDao">
+    <select id="getOrder" parameterType="String" resultType="Order">
+        SELECT * FROM movieOrder WHERE userId = #{userId}
+    </select>
+    <insert id="saveOrder" parameterType="Order">
+        INSERT INTO movieOrder VALUES (#{id}, #{movieId}, #{userId})
+    </insert>
+    <select id="getOrderById" parameterType="String">
+        INSERT INTO movieOrder WHERE id = #{id}
+    </select>
+    <delete id="deleteOrderById" parameterType="String">
+        DELETE FROM movieOrder WHERE id = #{id}
+    </delete>
+    <select id="getOrderByIdInfo" parameterType="String" resultMap="BaseOrder">
+        select movieOrder.id, movie.name as movieName, user.username from movieOrder left join user on userId = user.id left join movie on movie.id = movieOrder.movieId  WHERE userId = #{userId}
+    </select>
+    <resultMap id="BaseOrder" type="com.bimo.pojo.BaseOrder">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="movieName" jdbcType="VARCHAR" property="movieName" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+    </resultMap>
+</mapper>
